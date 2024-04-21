@@ -1,0 +1,116 @@
+u1 = User.objects.create_user(username='Denzel')
+u1.save()
+u2 = User.objects.create_user(username='Harrison') 
+u2.save()
+
+a1 = Author.objects.create(user=u1)
+a1.save()
+a2 = Author.objects.create(user=u2) 
+a2.save()  
+
+cat1 = Category.objects.create(name='sport')
+cat2 = Category.objects.create(name='politic') 
+cat3 = Category.objects.create(name='science') 
+cat4 = Category.objects.create(name='industry') 
+cat1.save()
+cat2.save()
+cat3.save()
+cat4.save()
+
+new1 = Post.objects.create(title="""Nathan Patterson: Scotland & Everton right-back out for rest of season """, text="""Scotland boss Steve Clarke could face a dilemma over who to pick at right-back at Euro 2024 with Everton's Nathan Patterson out for the rest of this season.
+   The defender, 22, will require surgery on a hamstring injury suffered in stoppage-time of their 6-0 defeat to Chelsea.
+   Brentford's Aaron Hickey is also in a race to feature again before the end of this season - meaning Clarke could be without his two favoured right-backs.""", author=a1)
+new1.save()
+
+art1 = Post.objects.create(title="""Gerald Ford president of the United States""", text="""Gerald Ford (born July 14, 1913, Omaha, Nebraska, U.S.—died December 26, 2006, Rancho Mirage, California) was the 38th president of the United States (1974–77), who, as 40th vice president, had succeeded to the presidency on the resignation of President Richard Nixon, under the process decreed by the Twenty-fifth Amendment 
+to the Constitution, and thereby became the country’s only chief executive who had not been elected either president or vice president. 
+ Early life
+Gerald Ford: football at the University of Michigan
+Gerald Ford: football at the University of Michigan
+Gerald Ford as a member of the University of Michigan's football team, 1933.
+Betty Ford
+Betty Ford
+Betty Ford, 1974.
+While Gerald Ford was still an infant, his parents were divorced, and his mother moved to Grand Rapids, Michigan, where she married Gerald R. Ford, Sr., who adopted the boy and gave 
+him his name. After graduating from the University of Michigan (1935), where he was a star football player, Ford worked as an assistant coach while he earned a law degree from Yale University (1941). He joined the navy during World War II and served in the South Pacific, attaining the rank of lieutenant commander and nearly losing his life in 1944 during a deadly typhoon that killed hundreds. In 1948, the year he won his first elective office, as Republican congressman from Michigan, he married Elizabeth Anne Bloomer (Betty Ford), with whom he had four children—three sons (Michael, John, and Steven) and one daughter (Susan).""", post_kind='ART', author=a2)
+art1.save()
+
+art2 =Post.objects.create(title="""The Secret to the Strongest Force in the Universe""", text="""The strongest force in the universe is called, aptly, the strong force. We never get to witness its fearsome power because it works only across subatomic distances, where it binds quarks together inside protons and neutrons and joins those nucleons into atomic nuclei. Of the four basic forces of nature, the strong force is by far the most potent—it’s 100 trillion trillion trillion times stronger than the force of gravity. It’s also the most mysterious. 
+     Despite knowing roughly how it compares with the other forces, scientists don’t know precisely how strong the strong force is. The other three forces—gravity, the electromagnetic force and the weak nuclear force (responsible for some radioactivity)—are much better measured. The strength of electromagnetism, for example, denoted by its “coupling constant,” has been measured with the same precision as the distance between New York and Los Angeles, to within a few hair breadths. Yet the strong force’s coupling constant, called αs (“alpha s”), is by far the least understood of these quantities. The precision of the best measurements of αs is 100 million times worse than that of the electromagnetic measurement.
+    Even this level of (un)certainty is known only in the simplest domain of the strong force theory, at very high energies involved only in some of the rarest and most extreme events in nature. At the lower energies relevant to the world around us, the strong force earns its name by becoming truly intense, and concrete information on αs in this range is scarce. Until recently, no one had made any experimental measurements of αs at this scale. Theoretical predictions for its value were unhelpful, covering the entire span from zero to infinity.""", post_kind='ART', author=a2)
+art2.save
+
+new1.category.add(cat1)
+art1.category.add(cat2)
+art2.category.add(cat3)
+art2.category.add(cat4)
+	
+
+c1 = Comment.objects.create(text="""It's a good new""", post=new1, user=u1) 
+c1.save()
+c2 = Comment.objects.create(text="""Not interesting""", post=art2, user=u2) 
+c2.save()
+c3 = Comment.objects.create(text="""Very interesting""", post=art2, user=a1.user)
+c3.save() 
+c4 = Comment.objects.create(text="""Fine""", post=art2, user=u1)
+c4.save()
+c5 = Comment.objects.create(text="""Not ordinary""", post=art1, user=a2.user)
+c5.save()	
+
+new1.like()
+new1.like()
+new1.like()
+new1.like()
+new1.dislike()
+art1.like()
+art1.like()
+art1.dislike()
+art2.like()
+art2.like()
+art2.like()
+art2.like()
+art2.dislike() 
+c1.like()
+c1.like()
+c1.like()
+c1.like()
+c1.dislike() 
+c2.like()
+c2.like()
+c2.like()
+c2.like()
+c3.like()
+c3.like()
+c3.like()
+c3.like()
+c3.like()
+c2.dislike()
+c2.dislike()
+c2.dislike()
+c2.dislike()
+c2.dislike()
+c4.like()
+c4.like()
+c4.like()
+c5.like()
+c5.like()
+c5.like()
+c5.like()
+c5.like()
+art2.like()
+
+a1.update_rating()
+a2.update_rating()
+
+a_best = Author.objects.order_by("-rating").first()
+a_best.user.username
+a_best.rating
+
+post_best =  Post.objects.order_by("-rating").first()
+post_best.post_time
+post_best.author.user.username 
+post_best.rating
+post_best.title
+post_best.preview()
+
+post_best.comment_set.values('time', 'user', 'rating', 'text')
