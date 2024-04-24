@@ -1,0 +1,33 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+
+{% block title %}
+Post
+{% endblock title %}
+
+
+{% block content %}
+<table>
+    <tr>
+        <td>Заголовок</td>
+        <td>
+            <pre>   Дата           </pre>
+        </td>
+        <td>Текст</td>
+    </tr>
+
+    <tr>
+        <td>{{ post.title|censor }}</td>
+        <td>{{ post.post_time|date:'d M Y' }}</td>
+        <td>{{ post.text|censor}}</td>
+    </tr>
+
+</table>
+
+
+<!--<h2>{{ post.title }}</h2>-->
+<!--{{post.post_time|date:'d M Y' }}-->
+<!--{{post.text}}-->
+{% endblock content %}
